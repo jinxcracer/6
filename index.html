@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONQ Tech</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffeb3b;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h3 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        select {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #999;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .role-options {
+            margin-top: 20px;
+        }
+
+        .role-options ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .role-options li {
+            margin-bottom: 10px;
+        }
+
+        .role-options li label {
+            margin-left: 5px;
+        }
+
+        #registrarForm,
+        #cashierForm,
+        #queueForm {
+            display: none;
+        }
+
+        #registrarForm .container,
+        #cashierForm .container,
+        #queueForm .container {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        #registrarForm h3,
+        #cashierForm h3,
+        #queueForm h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="onqTechContent" class="container">
+        <h3>ONQ Tech</h3>
+        <form id="form1" onsubmit="showChoices(event)">
+            <label for="userType">Select User Type:</label>
+            <select id="userType" onchange="toggleFields()">
+                <option value="student">Student</option>
+                <option value="parent">Parent / Guardian</option>
+            </select>
+
+            <div id="studentFields">
+            </div>
+
+            <div id="parentFields">
+            </div>
+
+            <button type="submit">Proceed</button>
+
+            <div class="role-options" id="roleOptions">
+                <label for="role">Please select your role:</label>
+                <ul>
+                    <li><input type="radio" id="cashier" name="role" value="Cashier"><label for="cashier">Cashier</label></li>
+                    <li><input type="radio" id="registrar" name="role" value="Registrar"><label for="registrar">Registrar</label></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
+    <div id="registrarForm" class="container">
+        <h3>Registrar</h3>
+        <form id="registrarFormContent" onsubmit="submitRegistrarForm(event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+            <label for="documentType">Document Type:</label>
+            <select id="documentType" name="documentType">
+                <option value="permit">Permit</option>
+                <option value="clearance">Clearance</option>
+                <option value="schoolForms">School Forms</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="back-button">
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+
+    <div id="cashierForm" class="container">
+        <h3>Cashier</h3>
+        <form id="cashierFormContent" onsubmit="submitCashierForm(event)">
+            <label for="cashierName">Name:</label>
+            <input type="text" id="cashierName" name="cashierName" placeholder="Enter your name" required>
+            <label for="cashierLastName">Last Name:</label>
+            <input type="text" id="cashierLastName" name="cashierLastName" placeholder="Enter your last name" required>
+            <label for="paymentType">Payment Type:</label>
+            <select id="paymentType" name="paymentType">
+                <option value="fullPayment">Full Payment</option>
+                <option value="installment">Installment</option>
+            </select>
+            <label for="year">Year:</label>
+            <select id="year" name="year">
+                <option value="firstYear">First Year</option>
+                <option value="secondYear">Second Year</option>
+                <option value="thirdYear">Third Year</option>
+                <option value="fourthYear">Fourth Year</option>
+            </select>
+            <label for="course">Course:</label>
+            <select id="course" name="course">
+                <option value="BSIT">BSIT</option>
+                <option value="BSTM">BSTM</option>
+                <option value="BSBA">BSBA</option>
+                <option value="BSCPE">BSCPE</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="back-button">
+            <button onclick="goBack()">Back</button>
+        </div>
+    </div>
+
+    <div id="queueForm" class="container">
+        <h3>Queue Information</h3>
+        <div id="studentName"></div>
+        <div id="position">Your position in the queue: 1</div>
+        <div id="countdown">Queueing time: 3m 0s</div>
+        <div class="back-button">
+            <button onclick="requeue()">Requeue</button>
+            <button onclick="leave()">Leave</button>
+        </div>
+    </div>
+
+    <script>
+        var countdownTimer;
+        var queuePosition = 1;
+
+        function toggleFields() {
+            var userType = document.getElementById("userType").value;
+            var studentFields = document.getElementById("studentFields");
+            var parentFields = document.getElementById("parentFields");
+            var registrarForm = document.getElementById("registrarForm");
+            var cashierForm = document.getElementById("cashierForm");
+
+            if (userType === "student") {
+                studentFields.style.display = "block";
+                parentFields.style.display = "none";
+                registrarForm.style.display = "none";
+                cashierForm.style.display = "none";
+            } else if (userType === "parent") {
+                studentFields.style.display = "none";
+                parentFields.style.display = "block";
+                registrarForm.style.display = "none";
+                cashierForm.style.display = "none";
+            }
+        }
+
+        function showChoices(event) {
+            event.preventDefault();
+            var userType = document.getElementById("userType").value;
+            var selectedRole = document.querySelector('input[name="role"]:checked');
+            var registrarForm = document.getElementById("registrarForm");
+            var cashierForm = document.getElementById("cashierForm");
+
+            if (selectedRole) {
+                var role = selectedRole.value;
+                if (role === "Registrar") {
+                    registrarForm.style.display = "block";
+                    document.getElementById("onqTechContent").style.display = "none";
+                    cashierForm.style.display = "none";
+                } else if (role === "Cashier") {
+                    cashierForm.style.display = "block";
+                    document.getElementById("onqTechContent").style.display = "none";
+                    registrarForm.style.display = "none";
+                } else {
+                    registrarForm.style.display = "none";
+                    cashierForm.style.display = "none";
+                    document.getElementById("onqTechContent").style.display = "block";
+                    var choices = "User Type: " + userType + "<br>";
+                    if (userType === "parent") {
+                        var parentFirstName = document.getElementById("parentFirstName").value;
+                        var parentLastName = document.getElementById("parentLastName").value;
+                        choices += "Parent First Name: " + parentFirstName + "<br>";
+                        choices += "Parent Last Name: " + parentLastName + "<br>";
+                    }
+                    choices += "Selected Role: " + role + "<br>";
+                    var popup = window.open('', '_blank', 'width=400,height=300,scrollbars=yes,resizable=yes');
+                    popup.document.write(choices);
+                    popup.focus();
+                }
+            } else {
+                alert("Please select a role!");
+            }
+        }
+
+        function submitRegistrarForm(event) {
+            event.preventDefault();
+            var name = document.getElementById("name").value;
+            var lastName = document.getElementById("lastName").value;
+            document.getElementById("studentName").textContent = "Student: " + name + " " + lastName;
+            document.getElementById("registrarForm").style.display = "none";
+            document.getElementById("queueForm").style.display = "block";
+            startQueueTimer();
+        }
+
+        function submitCashierForm(event) {
+            event.preventDefault();
+            var name = document.getElementById("cashierName").value;
+            var lastName = document.getElementById("cashierLastName").value;
+            var studentNameElement = document.getElementById("studentName");
+            studentNameElement.textContent = "Student: " + name + " " + lastName;
+
+            var paymentType = document.getElementById("paymentType").value;
+            var year = document.getElementById("year").value;
+            var course = document.getElementById("course").value;
+
+            document.getElementById("cashierForm").style.display = "none";
+            document.getElementById("queueForm").style.display = "block";
+            startQueueTimer();
+        }
+
+        function startQueueTimer() {
+            var count = 180; // 3 minutes
+            var countdownElement = document.getElementById("countdown");
+            countdownTimer = setInterval(function() {
+                var minutes = Math.floor(count / 60);
+                var seconds = count % 60;
+                countdownElement.textContent = "Queueing time: " + minutes + "m " + seconds + "s";
+                count--;
+                if (count < 0) {
+                    clearInterval(countdownTimer);
+                    endQueue();
+                }
+            }, 1000);
+        }
+
+        function endQueue() {
+            var positionElement = document.getElementById("position");
+            positionElement.textContent = "Your position in the queue: " + queuePosition;
+        }
+
+        function requeue() {
+            clearInterval(countdownTimer);
+            var countdownElement = document.getElementById("countdown");
+            countdownElement.textContent = "Queueing time: 3m 0s";
+            document.getElementById("queueForm").style.display = "none";
+            document.getElementById("cashierForm").style.display = "block";
+            queuePosition++;
+        }
+
+        function leave() {
+            window.close();
+        }
+
+        function goBack() {
+            var onqTechContent = document.getElementById("onqTechContent");
+            var registrarForm = document.getElementById("registrarForm");
+            var cashierForm = document.getElementById("cashierForm");
+
+            onqTechContent.style.display = "block";
+            registrarForm.style.display = "none";
+            cashierForm.style.display = "none";
+        }
+    </script>
+</body>
+</html>
